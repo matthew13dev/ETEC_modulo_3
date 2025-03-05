@@ -1,2 +1,2 @@
-# etec-m-dulo-3
+# ETEC_modulo_3
 Material de estudos
