@@ -1,71 +1,126 @@
-criar banco de dados imobiliários;
+-- Criar o banco de dados
+CREATE DATABASE imobiliaria;
+USE imobiliaria;
 
-usar imóveis;
-
-criar tabela sindico (
-  matricula int(3) não nulo auto_increment,
-  nome varchar(80) padrão nulo,
-  endereco varchar (80) padrão nulo,
-  telefone varchar(15) padrão nulo,
-  chave primária (matriz)
+-- Criar tabela sindico
+CREATE TABLE sindico (
+  matricula INT(3) NOT NULL AUTO_INCREMENT,
+  nome VARCHAR(80) DEFAULT NULL,
+  endereco VARCHAR(80) DEFAULT NULL,
+  telefone VARCHAR(15) DEFAULT NULL,
+  PRIMARY KEY (matricula)
 );
 
-inserir em valores síndicos (1,'antonio carlos','avenida santos dummont, número 789, califórnia, são paulo','(11) 3456-6787'),(2,'sidnei delgado','alameda xv de novembro, número 123, jockey club, são paulo','(11) 3452-4562');
+-- Inserir dados na tabela sindico
+INSERT INTO sindico (matricula, nome, endereco, telefone) VALUES
+(1, 'Antonio Carlos', 'Avenida Santos Dummont, 789, Califórnia, São Paulo', '(11) 3456-6787'),
+(2, 'Sidnei Delgado', 'Alameda XV de Novembro, 123, Jockey Club, São Paulo', '(11) 3452-4562');
 
-criar tabela condomínio (
-  codigo int(5) não nulo auto_increment,
-  nome varchar(50) padrão nulo,
-  endereco varchar (80) padrão nulo,
-  matricula_sind int(3) padrão nulo,
-  chave primária (codigo),
-  chave fx_cond_sindico (matrícula_sind),
-  restrição fx_cond_sindico chave estrangeira (matricula_sind) faz referência ao sindico (matricula)
+-- Criar tabela condominio
+CREATE TABLE condominio (
+  codigo INT(5) NOT NULL AUTO_INCREMENT,
+  nome VARCHAR(50) DEFAULT NULL,
+  endereco VARCHAR(80) DEFAULT NULL,
+  matricula_sind INT(3) DEFAULT NULL,
+  PRIMARY KEY (codigo),
+  FOREIGN KEY (matricula_sind) REFERENCES sindico(matricula)
 );
 
-inserir nos valores de condomínio (1,'condomínio são paulo','alameda getulio vargas, número 897, centro, são paulo',1),(2,'condomínio brasil','avenida general gusmão, número 453, penha, são paulo',2);
+-- Inserir dados na tabela condominio
+INSERT INTO condominio (codigo, nome, endereco, matricula_sind) VALUES
+(1, 'Condomínio São Paulo', 'Alameda Getúlio Vargas, 897, Centro, São Paulo', 1),
+(2, 'Condomínio Brasil', 'Avenida General Gusmão, 453, Penha, São Paulo', 2);
 
-criar tabela apartamento (
-  numero varchar(5) não nulo,
-  tipo varchar(20) padrão nulo,
-  codigo_cond int(5) padrão nulo,
-  valor double(10,2) padrão '0,00',
-  chave primária (numero),
-  chave fk_ap_cond (codigo_cond),
-  restrição fk_ap_cond chave estrangeira (codigo_cond) faz referência a condomínio (codigo)
+-- Criar tabela apartamento
+CREATE TABLE apartamento (
+  numero VARCHAR(5) NOT NULL,
+  tipo VARCHAR(20) DEFAULT NULL,
+  codigo_cond INT(5) DEFAULT NULL,
+  valor DOUBLE(10,2) DEFAULT 0.00,
+  PRIMARY KEY (numero),
+  FOREIGN KEY (codigo_cond) REFERENCES condominio(codigo)
 );
 
-inserir nos valores do apartamento ('a101','padrão',1.100000,00),('a201','padrão',1.115000,00),('a301','padrão' ',1.125000,00),('a401','padrão',1.135000,00),('a501','cobertura',1.150000,00), ('b101','padrão',2.200.000,00),('b201','padrão',2.215.000,00),('b301','padrão' ',2.225000,00),('b401','padrão',2.235000,00),('b501','cobertura',2.250000,00);
+-- Inserir dados na tabela apartamento
+INSERT INTO apartamento (numero, tipo, codigo_cond, valor) VALUES
+('A101', 'Padrão', 1, 110000.00),
+('A201', 'Padrão', 1, 115000.00),
+('A301', 'Padrão', 1, 125000.00),
+('A401', 'Padrão', 1, 135000.00),
+('A501', 'Cobertura', 1, 150000.00),
+('B101', 'Padrão', 2, 200000.00),
+('B201', 'Padrão', 2, 215000.00),
+('B301', 'Padrão', 2, 225000.00),
+('B401', 'Padrão', 2, 235000.00),
+('B501', 'Cobertura', 2, 250000.00);
 
-criar tabela garagem (
-  numero int(3) não nulo auto_increment,
-  tipo varchar(20) padrão nulo,
-  numero_ap varchar(5) padrão nulo,
-  chave primária (numero),
-  chave fk_gar_apartamento (numero_ap),
-  restrição fk_gar_apartamento chave estrangeira (numero_ap) referências apartamento (numero)
+-- Criar tabela garagem
+CREATE TABLE garagem (
+  numero INT(3) NOT NULL AUTO_INCREMENT,
+  tipo VARCHAR(20) DEFAULT NULL,
+  numero_ap VARCHAR(5) DEFAULT NULL,
+  PRIMARY KEY (numero),
+  FOREIGN KEY (numero_ap) REFERENCES apartamento(numero)
 );
 
-inserir em valores de garagem (1,'padrão','a101'),(2,'padrão','a201'),(3,'padrão','a301'),(4,'padrão','a40 1'),(5,'coberta','a501'),(6,'padrão','b101'),(7,'padrão','b101'),(8,'padrão', 'b201'),(9,'padrão','b201'),(10,'padrão','b301'),(11,'padrão','b301'),(12,'pa drão','b401'),(13,'padrão','b401'),(14,'coberta','b501'),(15,'coberta','b501');
+-- Inserir dados na tabela garagem
+INSERT INTO garagem (numero, tipo, numero_ap) VALUES
+(1, 'Padrão', 'A101'),
+(2, 'Padrão', 'A201'),
+(3, 'Padrão', 'A301'),
+(4, 'Padrão', 'A401'),
+(5, 'Coberta', 'A501'),
+(6, 'Padrão', 'B101'),
+(7, 'Padrão', 'B101'),
+(8, 'Padrão', 'B201'),
+(9, 'Padrão', 'B201'),
+(10, 'Padrão', 'B301'),
+(11, 'Padrão', 'B301'),
+(12, 'Padrão', 'B401'),
+(13, 'Padrão', 'B401'),
+(14, 'Coberta', 'B501'),
+(15, 'Coberta', 'B501');
 
-criar tabela proprietario (
-  rg varchar(15) não nulo,
-  nome varchar(80) padrão nulo,
-  telefone varchar(15) padrão nulo,
-  e-mail varchar(50) padrão nulo,
-  chave primária (rg)
+-- Criar tabela proprietario
+CREATE TABLE proprietario (
+  rg VARCHAR(15) NOT NULL,
+  nome VARCHAR(80) DEFAULT NULL,
+  telefone VARCHAR(15) DEFAULT NULL,
+  email VARCHAR(50) DEFAULT NULL,
+  PRIMARY KEY (rg)
 );
 
-inserir nos valores do proprietário ('12345678-0','carlos eduardo','(11) 3256-7890','carloseduardoead@email.com.br'),('32145678-4','oswaldo lima','(11) 2314-9876','oswaldolimaead@email.com.br'),('32156788-0','pedro castro','(11) 3452-8743','pedroead@email.com.br'),('46536267-3','maria luiza','(11) 2345-1627','marialuizaead@email.com.br'),('54367281-2','joana darc','(11) 4563-2315','joanadarcead@email.com.br'),('74853928-2','benedito vai','(11) 3427-4132','beneditogoesead@email.com.br'),('76534126-4','matheus henrique','(11) 2234-1123','matheushenriqueead@email.com.br'),('98635314-5','augusto silva','(11) 4122-2134','augustosilvaead@email.com.br'),('99987271-1','marcos Vinícius','(11) 2124-2427','marcosviniciusead@email.com.br');
+-- Inserir dados na tabela proprietario
+INSERT INTO proprietario (rg, nome, telefone, email) VALUES
+('12345678-0', 'Carlos Eduardo', '(11) 3256-7890', 'carloseduardoead@email.com.br'),
+('32145678-4', 'Oswaldo Lima', '(11) 2314-9876', 'oswaldolimaead@email.com.br'),
+('32156788-0', 'Pedro Castro', '(11) 3452-8743', 'pedroead@email.com.br'),
+('46536267-3', 'Maria Luiza', '(11) 2345-1627', 'marialuizaead@email.com.br'),
+('54367281-2', 'Joana Darc', '(11) 4563-2315', 'joanadarcead@email.com.br'),
+('74853928-2', 'Benedito Vai', '(11) 3427-4132', 'beneditogoesead@email.com.br'),
+('76534126-4', 'Matheus Henrique', '(11) 2234-1123', 'matheushenriqueead@email.com.br'),
+('98635314-5', 'Augusto Silva', '(11) 4122-2134', 'augustosilvaead@email.com.br'),
+('99987271-1', 'Marcos Vinícius', '(11) 2124-2427', 'marcosviniciusead@email.com.br');
 
-criar tabela proprietario_apartamento (
-  prop_ap_id int(3) não nulo auto_increment,
-  numero_ap varchar(5) padrão nulo,
-  rg_prop varchar(15) padrão nulo,
-  chave primária (prop_ap_id),
-  chave fk_pa_apartamento (numero_ap),
-  chave fk_pa_proprietário (rg_prop),
-  restrição fk_pa_apartamento chave estrangeira (numero_ap) faz referência a apartamento (numero),
-  restrição fk_pa_proprietario chave estrangeira (rg_prop) faz referência a propriedade (rg)
+-- Criar tabela proprietario_apartamento
+CREATE TABLE proprietario_apartamento (
+  prop_ap_id INT(3) NOT NULL AUTO_INCREMENT,
+  numero_ap VARCHAR(5) DEFAULT NULL,
+  rg_prop VARCHAR(15) DEFAULT NULL,
+  PRIMARY KEY (prop_ap_id),
+  FOREIGN KEY (numero_ap) REFERENCES apartamento(numero),
+  FOREIGN KEY (rg_prop) REFERENCES proprietario(rg)
 );
 
-inserir nos valores proprietario_apartamento (1,'a101','12345678-0'),(2,'a201','32145678-4'),(3,'a301','32156788-0'),(4,'a401','46536267-3'),(5,'a501','54367281-2'), (6,'b101','74853928-2'),(7,'b201','76534126-4'),(8,'b301','98635314-5'),(9,'b401','99987271-1'),(10,'b501','99987271-1');
+-- Inserir dados na tabela proprietario_apartamento
+INSERT INTO proprietario_apartamento (prop_ap_id, numero_ap, rg_prop) VALUES
+(1, 'A101', '12345678-0'),
+(2, 'A201', '32145678-4'),
+(3, 'A301', '32156788-0'),
+(4, 'A401', '46536267-3'),
+(5, 'A501', '54367281-2'),
+(6, 'B101', '74853928-2'),
+(7, 'B201', '76534126-4'),
+(8, 'B301', '98635314-5'),
+(9, 'B401', '99987271-1'),
+(10, 'B501', '99987271-1');
