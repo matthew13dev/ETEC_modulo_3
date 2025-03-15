@@ -14,3 +14,29 @@ BEGIN
 END //
 
 DELIMITER ;
+
+--Execução do procedure:
+CALL AtualizarValorApartamento(1, 10);
+
+
+--2 - Procedure para efetivação de compra de um apartamento
+
+DELIMITER //
+
+CREATE PROCEDURE ComprarApartamento(
+    IN p_rg_prop VARCHAR(15),  -- RG do novo proprietário
+    IN p_numero_ap VARCHAR(5)  -- Número do apartamento
+)
+BEGIN
+    -- Verificar se o apartamento já tem um proprietário e remover a associação anterior
+    DELETE FROM proprietario_apartamento WHERE numero_ap = p_numero_ap;
+
+    -- Atribuir o novo proprietário ao apartamento
+    INSERT INTO proprietario_apartamento (numero_ap, rg_prop)
+    VALUES (p_numero_ap, p_rg_prop);
+END //
+
+DELIMITER ;
+
+--Execução do procedure:
+CALL ComprarApartamento('12345678-0', 'A101');
