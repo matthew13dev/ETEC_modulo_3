@@ -1,6 +1,18 @@
 version: "3.8"
 
 services:
+
+  php:
+    image: php:8.0-apache
+    container_name: php_imobiliaria
+    restart: always
+    ports:
+      - "80:80"
+    volumes:
+      - ./src:/var/www/html
+      - ./php.ini:/usr/local/etc/php/conf.d/custom.ini
+    depends_on:
+      - mysql
   mysql:
     image: mysql:8.0
     container_name: mysql_imobiliaria
