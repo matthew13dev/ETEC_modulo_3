@@ -1,25 +1,24 @@
 version: "3.8"
 
 services:
-
   php:
     image: php:8.0-apache
-    container_name: php_imobiliaria
+    container_name: php_modulo3
     restart: always
     ports:
       - "80:80"
     volumes:
-      - ./src:/var/www/html
+      - ./src/agenda11:/var/www/html
       - ./php.ini:/usr/local/etc/php/conf.d/custom.ini
     depends_on:
       - mysql
   mysql:
     image: mysql:8.0
-    container_name: mysql_imobiliaria
+    container_name: mysql_modulo3
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
-      MYSQL_DATABASE: ${MYSQL_DATABASE}
+
     ports:
       - "3306:3306"
     volumes:
