@@ -8,8 +8,12 @@
 </head>
 
 <body>
-    <h1>Agenda 11 - Projeto Final</h1>
-    <h2>Criação das Models</h2>
+    <h1>Projeto Final</h1>
+    <ul>
+        <li>Agenda 11 - Criacao das Models</li>
+        <li>Agenda 12 - Criacao das Viwes</li>
+        <li>Agenda 13 - Criacao dos Controllers</li>
+    </ul>
 </body>
 
 </html>

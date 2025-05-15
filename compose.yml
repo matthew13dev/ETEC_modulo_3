@@ -8,7 +8,7 @@ services:
     ports:
       - "80:80"
     volumes:
-      - ./src/agenda11:/var/www/html
+      - ./src:/var/www/html
       - ./php.ini:/usr/local/etc/php/conf.d/custom.ini
     depends_on:
       - mysql
