@@ -122,7 +122,7 @@
 
 
         // Consulta SQL para selecionar os dados da tabela outras_formcoes
-        $sql = "SELECT * FROM outras_formcaoes WHERE idusuario = '" . $idusuario . "'";
+        $sql = "SELECT * FROM outrasformacoes WHERE idusuario = '" . $idusuario . "'";
 
         // Executa a consulta SQL
         $resultado = $conexao->query($sql);

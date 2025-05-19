@@ -145,4 +145,42 @@ switch ($_POST) {
             include_once "../View/operacaoNRealizada.php";
         }
         break;
+
+
+    //---Adicionar Outra Formacao-----
+    case isset($_POST["btnAddOF"]):
+        require_once "../Controller/OutrasFormacoesController.php";
+        require_once "../Model/OutrasFormacoes.php";
+
+        $outrasFormacoesController = new OutrasFormacoesController();
+
+        if (
+            $outrasFormacoesController->inserir(
+                date("Y-m-d", strtotime($_POST["txtInicioOF"])),
+                date("Y-m-d", strtotime($_POST["txtFimOF"])),
+                $_POST["txtDescOF"],
+                unserialize($_SESSION["Usuario"])->getID()
+            ) != false
+        ) {
+            include_once "../View/Secundarias/InformacaoInseridaComSucesso.phpinformacaoInserida.php";
+        } else {
+            include_once "../View/Secundarias/OperacaoRealizadaSemSucesso.php";
+        }
+        break;
+
+
+
+    //---Remover Outra Formacao-----
+    case isset($_POST["btnExcluirOF"]):
+        require_once "../Controller/OutrasFormacoesController.php.php";
+        include_once "../Model/OutrasFormacoes.php.php";
+
+        $outrasFormacoesController = new OutrasFormacoesController();
+
+        if ($outrasFormacoesController->excluir($_POST["idOF"]) == true) {
+            include_once "../View/informacaoExcluida.php";
+        } else {
+            include_once "../View/operacaoNRealizada.php";
+        }
+        break;
 }

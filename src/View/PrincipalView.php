@@ -185,7 +185,27 @@
                             <th>Descrição</th>
                             <th>Apagar</th>
                         </tr>
-                        <thead>
+                    </thead>
+                    <?php
+                    $fCon = new FormacaoAcademicaController();
+                    $results = $fCon->gerarLista(unserialize($_SESSION['Usuario'])->getID());
+                    if ($results != null)
+                        while ($row = $results->fetch_object()) {
+                            echo '<tr>';
+                            echo '<td style="width: 10%;">' . $row->inicio . '</td>';
+                            echo '<td style="width: 10%;">' . $row->fim . '</td>';
+                            echo '<td style="width: 65%;">' . $row->descricao . '</td>';
+                            echo '<td style="width: 5%;">
+                                            <form action="/Controller/NavegacaoController.php" method="post">
+                                            <input type="hidden" name="id" value="' . $row->idformacaoAcademica . '">
+                                            <button name="btnExcluirFA" class="w3-button w3-block w3-blue
+                                            w3-cell w3-round-large">
+                                            13
+                                            <i class="fa fa-user-times"></i> </button></td>
+                                            </form>';
+                            echo '</tr>';
+                        }
+                    ?>
                 </table>
             </div>
             <div class="w3-padding-128 w3-content w3-text-grey" id="experienciaProfissional">
@@ -344,8 +364,8 @@
                             </tr>
                         </thead>
                         <?php
-                        $fCon = new FormacaoAcademicaController();
-                        $results = $fCon->gerarLista(unserialize($_SESSION['Usuario'])->getID());
+                        $outrasFormacoes = new OutrasFormacoesController();
+                        $results = $outrasFormacoes->gerarLista(unserialize($_SESSION['Usuario'])->getID());
                         if ($results != null)
                             while ($row = $results->fetch_object()) {
                                 echo '<tr>';
@@ -353,9 +373,9 @@
                                 echo '<td style="width: 10%;">' . $row->fim . '</td>';
                                 echo '<td style="width: 65%;">' . $row->descricao . '</td>';
                                 echo '<td style="width: 5%;">
-                                            <form action="/Controller/NavegacaoController.php" method="post">
-                                            <input type="hidden" name="id" value="' . $row->idformacaoAcademica . '">
-                                            <button name="btnExcluirFA" class="w3-button w3-block w3-blue
+                                            <form action="../Controller/NavegacaoController.php" method="post">
+                                            <input type="hidden" name="id" value="' . $row->idformacao . '">
+                                            <button name="btnExcluirOF" class="w3-button w3-block w3-blue
                                             w3-cell w3-round-large">
                                             13
                                             <i class="fa fa-user-times"></i> </button></td>
