@@ -97,7 +97,7 @@ class Usuario
     // Método para verificar se o usuário existe no banco de dados
     public function carregarUsuario($cpf)
     {
-        require_once 'ConexaoBD.php';
+        require_once "./ConexaoDB.php";
         $con = new ConexaoBD();
         $conn = $con->conectar();
         if ($conn->connect_error) {

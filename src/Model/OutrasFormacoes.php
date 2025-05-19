@@ -109,7 +109,7 @@
 
 
     //Método LISTAR formacoes
-    public function listarFormcoes($idusuario)
+    public function listarFormacoes($idusuario)
     {
         require_once "ConexaoBD.php";
         $con = new ConexaoBD();
