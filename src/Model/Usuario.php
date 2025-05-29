@@ -156,4 +156,22 @@ class Usuario
         $conn->close();
         return $re;
     }
+
+
+    /*adicionado na agenda 14*/
+    public function listaUsuarios()
+    {
+        require_once 'conexaoBD.php';
+        $con = new ConexaoBD();
+        $conn = $con->conectar();
+        if ($conn->connect_error) {
+            die("Connection failed: " . $conn->connect_error);
+        } else {
+            $sql = "SELECT * FROM usuario";
+            $stmt = $conn->prepare($sql);
+            $stmt->execute();
+            $result = $stmt->get_result();
+            return $result;
+        }
+    }
 }

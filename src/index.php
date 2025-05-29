@@ -12,7 +12,7 @@
 
 <body>
     <?php
-    include_once './Controller/NavegacaoController.php';
+    // include_once './Controller/NavegacaoController.php';
     ?>
 </body>
 
